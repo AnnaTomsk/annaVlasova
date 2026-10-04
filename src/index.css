@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+  --color-gold-200: #f1dfbc;
+  --color-gold-300: #e5cb9b;
+  --color-gold-400: #d4b37f;
+  --color-gold-500: #c6a87d;
+  --color-gold-600: #aa8b60;
+  --color-gold-700: #876c47;
+  --color-dark-bg: #11100e;
+  --color-dark-card: #181715;
+  --color-dark-border: #2c2925;
+}
+
+/* Custom smooth styling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #121110;
+  color: #f5f1eb;
+}
+
+/* Range input slider styling for before/after */
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: auto;
+}

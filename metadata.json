@@ -1,0 +1,6 @@
+{
+  "name": "Анна Власова — Колорист",
+  "description": "Сайт-визитка топ-мастера и колориста-эксперта Анны Власовой. Сложные техники окрашивания, блонд, портфолио работ с интерактивным слайдером до/после.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
