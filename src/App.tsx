@@ -527,14 +527,13 @@ export default function App() {
                 <ArrowRight className="w-4 h-4 text-white/90" />
               </a>
 
-              <button
-                type="button"
-                onClick={() => handleOpenConsultation()}
+              <a
+                href={`tel:${siteConfig.contacts.phoneClean}`}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-[#25211c] hover:bg-[#302a24] text-[#e8dfd3] border border-[#3e372e] font-semibold text-sm transition-all active:scale-95"
               >
-                <MessageCircle className="w-4 h-4 text-[#c6a87d]" />
-                Задать вопрос с сайта
-              </button>
+                <Phone className="w-4 h-4 text-[#c6a87d]" />
+                Позвонить мастеру
+              </a>
             </div>
 
             <div className="pt-6 border-t border-[#29241e] flex flex-wrap items-center justify-center gap-6 text-xs text-[#8c8172]">
