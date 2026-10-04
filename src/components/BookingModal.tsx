@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Phone, Check, Sparkles, Clock, AlertCircle, ArrowRight } from 'lucide-react';
+import { X, Phone, Check, Sparkles, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { siteConfig } from '../config';
 import { MaxLogo } from './MaxLogo';
 
@@ -15,11 +15,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   initialTechnique,
 }) => {
   const [copiedPhone, setCopiedPhone] = useState(false);
-  const [name, setName] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
-  const [technique, setTechnique] = useState(initialTechnique || 'Консультация / Подбор техники');
-  const [notes, setNotes] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
@@ -33,11 +28,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     window.open(siteConfig.contacts.maxUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const handleSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
-
   return (
     <div
       id="consultation-modal"
@@ -48,7 +38,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         className="relative w-full max-w-lg bg-[#181614] border border-[#38332c] rounded-3xl p-6 sm:p-8 shadow-2xl text-[#f5f1eb] max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Кнопка закрытия */}
         <button
           type="button"
           onClick={onClose}
@@ -58,22 +48,28 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Title */}
+        {/* Заголовок */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#c6a87d]/10 border border-[#c6a87d]/30 text-[#e5cb9b] text-xs font-medium mb-2.5">
             <Sparkles className="w-3.5 h-3.5" />
             Консультация колориста
           </div>
           <h3 className="text-2xl sm:text-3xl font-serif text-[#fdfbf7]">
-            Консультация у Анны Власовой
+            Связаться с мастером
           </h3>
-          <p className="text-sm text-[#a89f91] mt-1.5 leading-relaxed">
-            Отправьте фото ваших волос при дневном свете и задайте любой вопрос по технике окрашивания
+          <p className="text-sm text-[#a89f91] mt-2 leading-relaxed">
+            Пришлите фото ваших волос при дневном свете и пожелания в мессенджер MAX или позвоните напрямую:
           </p>
+          {initialTechnique && (
+            <div className="inline-block mt-3 px-3 py-1 rounded-lg bg-[#24201b] border border-[#3c352a] text-xs text-[#c6a87d]">
+              Выбранная техника: <span className="font-semibold text-white">{initialTechnique}</span>
+            </div>
+          )}
         </div>
 
-        {/* MAX Messenger Main Button */}
-        <div className="space-y-3 mb-6">
+        {/* Кнопки связи */}
+        <div className="space-y-3.5">
+          {/* Кнопка MAX */}
           <button
             type="button"
             onClick={handleOpenMax}
@@ -86,7 +82,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   Написать в мессенджер MAX
                 </span>
                 <span className="block text-xs text-[#9cc0ee]">
-                  Российский мессенджер • Быстрый ответ
+                  Быстрый ответ • Онлайн-консультация по фото
                 </span>
               </span>
             </span>
@@ -95,23 +91,25 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </span>
           </button>
 
+          {/* Звонок и копирование номера */}
           <div className="flex gap-2">
             <a
               href={`tel:${siteConfig.contacts.phoneClean}`}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-[#25211c] hover:bg-[#2f2a24] border border-[#3c352c] text-[#e8dfd3] text-xs sm:text-sm font-medium transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-[#25211c] hover:bg-[#2f2a24] border border-[#3c352c] text-[#e8dfd3] text-sm font-medium transition-colors"
             >
               <Phone className="w-4 h-4 text-[#c6a87d]" />
-              Позвонить для консультации
+              <span>Позвонить {siteConfig.contacts.phone}</span>
             </a>
             <button
               type="button"
               onClick={handleCopyPhone}
-              className="px-4 py-3 rounded-2xl bg-[#25211c] hover:bg-[#2f2a24] border border-[#3c352c] text-xs font-medium text-[#c6a87d] transition-colors flex items-center gap-1.5"
+              className="px-4 py-3.5 rounded-2xl bg-[#25211c] hover:bg-[#2f2a24] border border-[#3c352c] text-xs font-medium text-[#c6a87d] transition-colors flex items-center gap-1.5"
+              title="Скопировать номер"
             >
               {copiedPhone ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  Скопирован
+                  <span>Скопирован</span>
                 </>
               ) : (
                 'Скопировать'
@@ -120,125 +118,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="relative flex items-center justify-center my-5">
-          <div className="border-t border-[#312c26] w-full" />
-          <span className="bg-[#181614] px-3 text-xs text-[#8c8273] uppercase tracking-wider">
-            или отправьте вопрос с сайта
-          </span>
-        </div>
-
-        {/* Consultation Form */}
-        {!isSubmitted ? (
-          <form onSubmit={handleSubmitForm} className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-[#b3a899] mb-1.5">
-                Ваше имя
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Как к вам обращаться"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#211e1a] border border-[#3a342c] text-[#f5f1eb] placeholder-[#736a5e] text-sm focus:outline-none focus:border-[#c6a87d]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-[#b3a899] mb-1.5">
-                Номер телефона или контакт в MAX
-              </label>
-              <input
-                type="text"
-                required
-                value={contactInfo}
-                onChange={(e) => setContactInfo(e.target.value)}
-                placeholder="+7 (___) ___-__-__ или контакт"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#211e1a] border border-[#3a342c] text-[#f5f1eb] placeholder-[#736a5e] text-sm focus:outline-none focus:border-[#c6a87d]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-[#b3a899] mb-1.5">
-                Интересующая техника / Тема консультации
-              </label>
-              <select
-                value={technique}
-                onChange={(e) => setTechnique(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#211e1a] border border-[#3a342c] text-[#f5f1eb] text-sm focus:outline-none focus:border-[#c6a87d]"
-              >
-                <option value="Консультация / Подбор техники">Консультация / Подбор техники</option>
-                {siteConfig.about.techniquesList.map((tech) => (
-                  <option key={tech} value={tech}>
-                    {tech}
-                  </option>
-                ))}
-                <option value="Исправление неудачного окрашивания">Исправление неудачного окрашивания</option>
-                <option value="Выход в блонд / Блондирование">Выход в блонд / Блондирование</option>
-                <option value="Окрашивание после хны">Окрашивание после хны</option>
-                <option value="Холодное восстановление волос">Холодное восстановление волос</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-[#b3a899] mb-1.5">
-                Опишите ваши волосы и пожелания
-              </label>
-              <textarea
-                rows={2}
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Текущее состояние волос, красились ли хной или бытовыми красителями..."
-                className="w-full px-4 py-2.5 rounded-xl bg-[#211e1a] border border-[#3a342c] text-[#f5f1eb] placeholder-[#736a5e] text-sm focus:outline-none focus:border-[#c6a87d] resize-none"
-              />
-            </div>
-
-            <div className="bg-[#24201b] border border-[#3e372e] rounded-xl p-3 flex gap-2.5 text-xs text-[#b8ad9e]">
-              <AlertCircle className="w-4 h-4 text-[#c6a87d] shrink-0 mt-0.5" />
-              <span>
-                <strong>Бесплатная консультация:</strong> Анна ответит на ваши вопросы, подскажет подходящую технику и сориентирует по времени и результату.
-              </span>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#c6a87d] to-[#deb887] text-[#121110] font-semibold text-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-[#c6a87d]/20"
-            >
-              Отправить запрос на консультацию
-            </button>
-          </form>
-        ) : (
-          <div className="text-center py-6 space-y-4">
-            <div className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto">
-              <Check className="w-7 h-7" />
-            </div>
-            <h4 className="text-xl font-serif text-[#fdfbf7]">
-              Спасибо за обращение, {name || 'запрос принят'}!
-            </h4>
-            <p className="text-sm text-[#b3a899] leading-relaxed">
-              Анна свяжется с вами по указанному контакту <strong className="text-white">{contactInfo}</strong> для проведения консультации.
-            </p>
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={handleOpenMax}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#203c66] hover:bg-[#284d82] text-white text-xs font-semibold transition-colors"
-              >
-                <MaxLogo className="w-4 h-4 rounded shrink-0" />
-                Написать напрямую в мессенджер MAX
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Footer info */}
-        <div className="mt-6 pt-4 border-t border-[#29241e] flex items-center justify-between text-xs text-[#807667]">
+        {/* Адрес и часы работы */}
+        <div className="mt-8 pt-4 border-t border-[#29241e] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#807667]">
           <span className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5 text-[#c6a87d]" />
             {siteConfig.contacts.workingHours}
           </span>
-          <span>{siteConfig.contacts.address}</span>
+          <span className="flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-[#c6a87d]" />
+            {siteConfig.contacts.address}
+          </span>
         </div>
       </div>
     </div>
