@@ -66,7 +66,7 @@ export const siteConfig: SiteConfig = {
     phoneClean: "+79539186571",
     maxMessengerName: "Мессенджер MAX",
     maxUrl: "https://max.ru/u/f9LHodD0cOJxFk-08liua-6mV1h20JyEjp88L0tgCHRWI5C_Py2N5PQkjOA",
-    address: "г. Москва, ул. Арбат",
+    address: "г. Томск Сибирская улица, 9А Hair Banda",
     workingHours: "Консультации ежедневно с 10:00 до 21:00",
   },
   about: {
